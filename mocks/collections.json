@@ -1,0 +1,16 @@
+[
+  {
+    "id": "base",
+    "routes": ["get-todos:success", "create-todo:success"]
+  },
+  {
+    "id": "get-todos-error",
+    "from": "base",
+    "routes": ["get-todos:error"]
+  },
+  {
+    "id": "create-todo-error",
+    "from": "base",
+    "routes": ["create-todo:error"]
+  }
+]
