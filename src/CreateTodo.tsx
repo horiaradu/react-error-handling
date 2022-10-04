@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { createTodo } from './api';
 
 import { useNavigate } from 'react-router-dom';
-import { genericErrorHandler } from './genericErrorHandler';
 
 function CreateTodo() {
   const navigate = useNavigate();
@@ -10,21 +9,9 @@ function CreateTodo() {
   const [hasError, setHasError] = useState(false);
 
   const onClick = async () => {
-    try {
-      await createTodo(title);
-      setHasError(false);
-      navigate('/');
-    } catch (e) {
-      console.log(e);
-      if (
-        (e as any).response.status === 400 &&
-        (e as any).response.data.error.code === 'INVALID_TITLE'
-      ) {
-        setHasError(true);
-      } else {
-        genericErrorHandler(e as any);
-      }
-    }
+    await createTodo(title);
+    setHasError(false);
+    navigate('/');
   };
 
   return (
