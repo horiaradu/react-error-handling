@@ -4,12 +4,13 @@ import { getTodos } from './api';
 import { Todo } from './types';
 
 import { Link } from 'react-router-dom';
+import { genericErrorHandler } from './genericErrorHandler';
 
 function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
-    getTodos().then(setTodos);
+    getTodos().then(setTodos).catch(genericErrorHandler);
   }, []);
 
   return (
