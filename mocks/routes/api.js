@@ -56,12 +56,11 @@ module.exports = [
         options: {
           middleware: (req, res, next, core) => {
             const { todo } = req.body;
-            console.log(todo);
-
-            todos = [...todos, { ...todo, id: todos.length + 1 }];
+            const newTodo = { ...todo, id: todos.length + 1 };
+            todos.push(newTodo);
 
             res.status(200);
-            res.send({ todo });
+            res.send({ todo: newTodo });
           },
         },
       },

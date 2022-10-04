@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
-import { createTodo, getTodos } from './api';
-import './App.css';
-import { Todos } from './components/todos';
-import { Todo } from './types';
+import { useState } from 'react';
+import { createTodo } from './api';
 
-function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+function CreateTodo() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
 
-  useEffect(() => {
-    getTodos().then(setTodos);
-  }, []);
-
   const onClick = async () => {
-    const todo = await createTodo(title);
-    setTodos([...todos, todo]);
-    setTitle('');
+    try {
+      await createTodo(title);
+      navigate('/');
+    } catch (e) {
+      toast('fail create');
+    }
   };
 
   return (
@@ -23,7 +22,7 @@ function App() {
       <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
         <div className="mb-4">
           <h1 className="text-3xl font-bold underline text-grey-900">
-            Yet another TODO list
+            New TODO
           </h1>
 
           <div className="flex mt-4">
@@ -39,11 +38,9 @@ function App() {
             </button>
           </div>
         </div>
-
-        <Todos todos={todos} />
       </div>
     </div>
   );
 }
 
-export default App;
+export default CreateTodo;
