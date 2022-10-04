@@ -12,7 +12,7 @@ axios.interceptors.response.use(
   },
   async (error: AxiosError) => {
     genericErrorHandler(error);
-    return Promise.reject(error);
+    return Promise.resolve();
   },
 );
 
