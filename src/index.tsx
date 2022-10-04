@@ -12,11 +12,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
+import ErrorBoundary from './ErrorBoundary';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Todos />,
+    element: (
+      <ErrorBoundary>
+        <Todos />
+      </ErrorBoundary>
+    ),
   },
   {
     path: '/new',
