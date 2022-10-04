@@ -7,13 +7,23 @@ import { useNavigate } from 'react-router-dom';
 function CreateTodo() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
+  const [hasError, setHasError] = useState(false);
 
   const onClick = async () => {
     try {
       await createTodo(title);
+      setHasError(false);
       navigate('/');
     } catch (e) {
-      toast('fail create');
+      console.log(e);
+      if (
+        (e as any).response.status === 400 &&
+        (e as any).response.data.error.code === 'INVALID_TITLE'
+      ) {
+        setHasError(true);
+      } else {
+        toast('fail');
+      }
     }
   };
 
@@ -27,7 +37,9 @@ function CreateTodo() {
 
           <div className="flex mt-4">
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-800"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-800 ${
+                hasError && 'border-rose-500'
+              }`}
               placeholder="Add Todo"
               value={title}
               onChange={(e) => setTitle(e.target.value)}></input>

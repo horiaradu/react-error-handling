@@ -23,7 +23,7 @@ const genericError = {
 };
 
 const titleEmpty = {
-  code: 'BAD_REQUEST',
+  code: 'INVALID_TITLE',
   message: 'Invalid title',
 };
 
@@ -41,7 +41,7 @@ module.exports = [
       {
         id: 'error',
         type: 'json',
-        options: { status: 400, body: { genericError } },
+        options: { status: 500, body: { genericError } },
       },
     ],
   },

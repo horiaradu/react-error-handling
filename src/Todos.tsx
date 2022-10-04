@@ -12,7 +12,7 @@ function Todos() {
   useEffect(() => {
     getTodos()
       .then(setTodos)
-      .catch(() => toast('fail load'));
+      .catch(() => toast('fail'));
   }, []);
 
   return (
