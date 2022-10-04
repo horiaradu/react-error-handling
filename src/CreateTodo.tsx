@@ -9,9 +9,18 @@ function CreateTodo() {
   const [hasError, setHasError] = useState(false);
 
   const onClick = async () => {
-    await createTodo(title);
-    setHasError(false);
-    navigate('/');
+    try {
+      await createTodo(title);
+      setHasError(false);
+      navigate('/');
+    } catch (e: any) {
+      if (
+        e.response.status === 400 &&
+        e.response.data.error.code === 'INVALID_TITLE'
+      ) {
+        setHasError(true);
+      }
+    }
   };
 
   return (
