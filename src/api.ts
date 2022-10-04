@@ -1,8 +1,20 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { genericErrorHandler } from './genericErrorHandler';
 import { Todo } from './types';
 
 axios.defaults.baseURL = 'http://localhost:3100';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+axios.interceptors.response.use(
+  (response: AxiosResponse) => {
+    console.log(response);
+    return response;
+  },
+  async (error: AxiosError) => {
+    genericErrorHandler(error);
+    return Promise.reject(error);
+  },
+);
 
 export const getTodos = async () => {
   const response = await axios.get('/api/todos');
