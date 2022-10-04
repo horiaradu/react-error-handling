@@ -27,6 +27,11 @@ const titleEmpty = {
   message: 'Invalid title',
 };
 
+const errorIDunno = {
+  code: 'PEAKABOO',
+  message: 'Howdy!',
+};
+
 module.exports = [
   {
     id: 'get-todos',
@@ -68,6 +73,11 @@ module.exports = [
         id: 'error',
         type: 'json',
         options: { status: 400, body: { error: titleEmpty } },
+      },
+      {
+        id: 'unknown-error',
+        type: 'json',
+        options: { status: 400, body: { error: errorIDunno } },
       },
     ],
   },
