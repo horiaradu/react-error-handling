@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { createTodo } from './api';
 
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { genericErrorHandler } from './genericErrorHandler';
 
 function CreateTodo() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function CreateTodo() {
       ) {
         setHasError(true);
       } else {
-        toast('fail');
+        genericErrorHandler(e as any);
       }
     }
   };

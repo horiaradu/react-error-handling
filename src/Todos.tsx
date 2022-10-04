@@ -3,8 +3,8 @@ import { getTodos } from './api';
 
 import { Todo } from './types';
 
-import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { genericErrorHandler } from './genericErrorHandler';
 
 function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -12,7 +12,7 @@ function Todos() {
   useEffect(() => {
     getTodos()
       .then(setTodos)
-      .catch(() => toast('fail'));
+      .catch((e) => genericErrorHandler(e));
   }, []);
 
   return (
