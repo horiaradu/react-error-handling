@@ -46,7 +46,7 @@ module.exports = [
       {
         id: 'error',
         type: 'json',
-        options: { status: 500, body: { genericError } },
+        options: { status: 500, body: { error: genericError } },
       },
     ],
   },
