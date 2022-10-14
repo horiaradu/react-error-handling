@@ -27,9 +27,9 @@ const titleEmpty = {
   message: 'Invalid title',
 };
 
-const errorIDunno = {
-  code: 'PEAKABOO',
-  message: 'Howdy!',
+const titleTaken = {
+  code: 'TAKEN_TITLE',
+  message: 'Title already taken',
 };
 
 module.exports = [
@@ -77,7 +77,7 @@ module.exports = [
       {
         id: 'unknown-error',
         type: 'json',
-        options: { status: 400, body: { error: errorIDunno } },
+        options: { status: 400, body: { error: titleTaken } },
       },
     ],
   },
