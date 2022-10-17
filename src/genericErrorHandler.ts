@@ -5,8 +5,13 @@ import { toast } from 'react-toastify';
 const knownErrors = ['INVALID_TITLE'];
 
 export function genericErrorHandler(error: AxiosError<any>) {
-  if (!knownErrors.includes(error.response?.data?.error?.code)) {
+  const code = error.response?.data?.error?.code;
+  if (!knownErrors.includes(code)) {
     console.error(error);
-    toast('fail');
+    if (code === 'GENERIC_ERROR') {
+      toast('fail');
+    } else {
+      toast(code);
+    }
   }
 }
