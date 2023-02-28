@@ -12,6 +12,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
+import storesContext from './contexts/storesContext';
+import stores from './stores';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +31,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <RouterProvider router={router} />
-    <ToastContainer />
+    <storesContext.Provider value={stores}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </storesContext.Provider>
   </>,
 );
 

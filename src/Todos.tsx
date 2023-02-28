@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-import { getTodos } from './api';
-
-import { Todo } from './types';
+import { useContext, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
+import storesContext from './contexts/storesContext';
+import { observer } from 'mobx-react-lite';
 
 function Todos() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const { todoStore } = useContext(storesContext);
 
   useEffect(() => {
-    getTodos().then(setTodos);
-  }, []);
+    todoStore.getTodos();
+  }, [todoStore]);
 
   return (
     <div className="h-100 w-full flex items-center justify-center bg-teal-50 font-sans">
@@ -30,7 +29,7 @@ function Todos() {
         </div>
 
         <ul>
-          {todos.map((todo) => (
+          {todoStore.todos.map((todo) => (
             <li key={todo.id} className="flex mb-4 items-center">
               <div className="w-full text-grey-900">{todo.title}</div>
             </li>
@@ -41,4 +40,4 @@ function Todos() {
   );
 }
 
-export default Todos;
+export default observer(Todos);

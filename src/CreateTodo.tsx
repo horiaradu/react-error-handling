@@ -1,15 +1,19 @@
-import { useState } from 'react';
-import { createTodo } from './api';
+import { useContext, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+
+import storesContext from './contexts/storesContext';
+import { observer } from 'mobx-react-lite';
 
 function CreateTodo() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [hasError, setHasError] = useState(false);
 
+  const { todoStore } = useContext(storesContext);
+
   const onClick = async () => {
-    await createTodo(title);
+    await todoStore.createTodo(title);
     setHasError(false);
     navigate('/');
   };
@@ -42,4 +46,4 @@ function CreateTodo() {
   );
 }
 
-export default CreateTodo;
+export default observer(CreateTodo);
