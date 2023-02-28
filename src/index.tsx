@@ -9,6 +9,9 @@ import reportWebVitals from './reportWebVitals';
 
 import { ToastContainer } from 'react-toastify';
 
+import { store } from './store';
+import { Provider } from 'react-redux';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
@@ -29,8 +32,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <RouterProvider router={router} />
-    <ToastContainer />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </Provider>
   </>,
 );
 

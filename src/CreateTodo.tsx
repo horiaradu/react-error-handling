@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { createTodo } from './api';
 
 import { useNavigate } from 'react-router-dom';
+import { useCreateTodoMutation } from './api';
 
 function CreateTodo() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [hasError, setHasError] = useState(false);
+
+  const [createTodo, result] = useCreateTodoMutation();
 
   const onClick = async () => {
-    await createTodo(title);
-    setHasError(false);
+    const r = await createTodo(title);
+    if ('error' in r) return;
     navigate('/');
   };
 
@@ -25,7 +26,7 @@ function CreateTodo() {
           <div className="flex mt-4">
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-800 ${
-                hasError && 'border-rose-500'
+                result.isError && 'border-rose-500'
               }`}
               placeholder="Add Todo"
               value={title}

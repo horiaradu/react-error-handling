@@ -1,19 +1,21 @@
-import axios from 'axios';
 import { Todo } from './types';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-axios.defaults.baseURL = 'http://localhost:3100';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+export const todoApi = createApi({
+  reducerPath: 'todoApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3100' }),
+  endpoints: (builder) => ({
+    getTodos: builder.query<{ todos: Todo[] }, void>({
+      query: () => '/api/todos',
+    }),
+    createTodo: builder.mutation<{ todo: Todo }, string>({
+      query: (title) => ({
+        url: '/api/todos',
+        method: 'POST',
+        body: { todo: { title } },
+      }),
+    }),
+  }),
+});
 
-export const getTodos = async () => {
-  const response = await axios.get('/api/todos');
-  const { todos }: { todos: Todo[] } = response.data;
-  console.log(todos);
-  return todos;
-};
-
-export const createTodo = async (title: string) => {
-  const response = await axios.post('/api/todos', { todo: { title } });
-  const { todo }: { todo: Todo } = response.data;
-  console.log(todo);
-  return todo;
-};
+export const { useGetTodosQuery, useCreateTodoMutation } = todoApi;
