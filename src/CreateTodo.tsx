@@ -8,13 +8,13 @@ import { observer } from 'mobx-react-lite';
 function CreateTodo() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [hasError, setHasError] = useState(false);
 
-  const { todoStore } = useContext(storesContext);
+  const { todoStore, errorStore } = useContext(storesContext);
+  const hasError = errorStore.hasError('INVALID_TITLE');
 
   const onClick = async () => {
     await todoStore.createTodo(title);
-    setHasError(false);
+    errorStore.clearError('INVALID_TITLE');
     navigate('/');
   };
 
