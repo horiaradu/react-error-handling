@@ -2,16 +2,19 @@ import { useState } from 'react';
 import { createTodo } from './api';
 
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
 function CreateTodo() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [hasError, setHasError] = useState(false);
+  const mutation = useMutation(['createTodo'], createTodo, {
+    onSuccess: () => {
+      navigate('/');
+    },
+  });
 
   const onClick = async () => {
-    await createTodo(title);
-    setHasError(false);
-    navigate('/');
+    mutation.mutate(title);
   };
 
   return (
@@ -25,7 +28,7 @@ function CreateTodo() {
           <div className="flex mt-4">
             <input
               className={`shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-800 ${
-                hasError && 'border-rose-500'
+                mutation.isError && 'border-rose-500'
               }`}
               placeholder="Add Todo"
               value={title}

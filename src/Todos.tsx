@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react';
 import { getTodos } from './api';
 
-import { Todo } from './types';
-
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 function Todos() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-
-  useEffect(() => {
-    getTodos().then(setTodos);
-  }, []);
+  const { data } = useQuery(['todos'], getTodos);
 
   return (
     <div className="h-100 w-full flex items-center justify-center bg-teal-50 font-sans">
@@ -30,7 +24,7 @@ function Todos() {
         </div>
 
         <ul>
-          {todos.map((todo) => (
+          {data?.map((todo) => (
             <li key={todo.id} className="flex mb-4 items-center">
               <div className="w-full text-grey-900">{todo.title}</div>
             </li>

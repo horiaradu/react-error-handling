@@ -3,8 +3,16 @@ import ReactDOM from 'react-dom/client';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+
 import Todos from './Todos';
 import CreateTodo from './CreateTodo';
+import { reactQueryErrorHandler } from './genericErrorHandler';
 import reportWebVitals from './reportWebVitals';
 
 import { ToastContainer } from 'react-toastify';
@@ -27,10 +35,28 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      onError: (error) => {
+        reactQueryErrorHandler(error);
+      },
+    },
+    mutations: {
+      onError: (error) => {
+        reactQueryErrorHandler(error);
+      },
+    },
+  },
+});
+
 root.render(
   <>
-    <RouterProvider router={router} />
-    <ToastContainer />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </QueryClientProvider>
   </>,
 );
 
